@@ -1,3 +1,6 @@
+require "set"
+require "yaml"
+
 module YAMLir
 
   class Base
@@ -6,15 +9,23 @@ module YAMLir
 
       def generate options = {}
         # TODO add options:
-        #   path: "for custom path"
         #   recursive: "true or false recursive"
         #   folder_only: "get folders only"
         #   without_extensions: "true of false for extensions" There'll be problem for the folder with the same name as the file without extension
-        process Dir["**/*"]
+        #   store: true or false - store or not result in file
+        @glob = options[:glob] || @glob
+        @file = options[:file] || @file
+        @path = options[:path] || @path
+        store process Dir[@glob]
       end
 
 
       private
+
+      def store result
+        name = [@path, @file].join "/"
+        File.open(name, "w"){ |f| f.write result }
+      end
 
       def process list
         tree(seed list).to_yaml

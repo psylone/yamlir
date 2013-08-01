@@ -2,9 +2,9 @@ module YAMLir
 
   class Simple < Base
 
-    # folders = "**/*"
-    # path = {test/cover.yml,spec/cover.yml}
-    # file name
+    @glob = "**/*"
+    @file = "yamlir.yml"
+    @path = "."
 
   end
 
