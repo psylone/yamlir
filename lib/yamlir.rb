@@ -9,18 +9,10 @@ module YAMLir
     Simple.generate options
   end
 
-  def self.register! options
+  # def self.register! options
     # TODO register new mode
     #
     # YAMLir.register! name: "Sinatra", glob: "", file: "", path: ""
-  end
+  # end
 
 end
-
-# yamlir.yml
-# spec/cover.yml
-# test/cover.yml
-# YAMLir::Rails.generate
-# YAMLir.generate
-#
-# YAMLir.generate glob: "{}/**/*.{rb}", file: "dir_out.yml", path: "reports/structure"

@@ -1,5 +1,6 @@
 require "set"
 require "yaml"
+require "fileutils"
 
 module YAMLir
 
@@ -8,21 +9,23 @@ module YAMLir
     module ClassMethods
 
       def generate options = {}
-        # TODO add options:
+        # TODO: Add options:
         #   recursive: "true or false recursive"
         #   folder_only: "get folders only"
         #   without_extensions: "true of false for extensions" There'll be problem for the folder with the same name as the file without extension
         #   store: true or false - store or not result in file
-        @glob = options[:glob] || @glob
-        @file = options[:file] || @file
-        @path = options[:path] || @path
-        store process Dir[@glob]
+        @glob = normalize options[:glob] || @glob
+        @file = normalize options[:file] || @file
+        @path = normalize options[:path] || @path
+        store process Dir[*@glob]
       end
 
 
       private
 
       def store result
+        @path.chomp! "/"
+        FileUtils.mkdir_p @path
         name = [@path, @file].join "/"
         File.open(name, "w"){ |f| f.write result }
       end
@@ -40,6 +43,10 @@ module YAMLir
         Set.new(list).classify{ |name| File.dirname(name) }
       end
 
+      def normalize opt
+        opt.is_a?(Proc) ? opt.call : opt
+      end
+
     end
 
     extend ClassMethods
@@ -48,6 +55,4 @@ module YAMLir
 
 end
 
-# TODO make automation for requiring each mode
-require "yamlir/mode/simple"
-require "yamlir/mode/rails"
+Dir[File.expand_path("../mode", __FILE__).concat "/*.{rb}"].each{ |mode| require mode }
