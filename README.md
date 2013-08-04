@@ -47,7 +47,7 @@ Or install it yourself as:
 
     YAMLir.generate
 
-This code will create yamlir.yml file in the current directory with the recursive structure of it.
+This code will create *yamlir.yml* file in the current directory with the recursive structure of it.
 
 ## Options
 
@@ -65,7 +65,37 @@ For change *output directory* path (missing directories will be created):
 
     YAMLir.generate path: "/tmp/structure"
 
-## Add custom modes
+## Custom modes
+
+### Foreword
+
+YAMLir can be augmented by custom modes.
+
+Originally this gem was conceived like a tool for generating a list of rails application files for subsequent marks those of them that have been tested and start the corresponding test suites. That's why YAMLir includes *RailsTestCover* mode which generates rails *app* directory structure and puts the result file (named *cover.yml*) in the *test* or *spec* folder. Later this idea was realized in a more general form with the possibility of adding custom modes.
+
+### Create own mode
+
+Suppose we want to create mode that generates all mp3 files under Music directory. This is it:
+
+    # lib/yamlir/mode/mp3.rb
+
+    module YAMLir
+
+      class Mp3 < Base
+
+        @glob = "/home/psylone/Music/**/*.{mp3}"
+        @file = "mp3.yml"
+        @path = "."
+
+      end
+
+    end
+
+To generate YAML structure write:
+
+    YAMLir::Mp3.generate
+
+All this work can also be done using options with *YAMLir.generate* method.
 
 ## Contributing
 
