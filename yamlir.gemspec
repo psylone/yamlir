@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["spaceflow@gmail.com"]
   spec.description   = %q{Create YAML file (commonly named yamlir.yml) with folders content.}
   spec.summary       = %q{Generate folder structure in YAML format.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/psylone/yamlir"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
